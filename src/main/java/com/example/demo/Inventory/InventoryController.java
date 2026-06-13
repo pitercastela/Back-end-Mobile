@@ -41,12 +41,6 @@ public class InventoryController {
         return ResponseEntity.ok(inventoryDao.listarTodos());
     }
 
-    // LISTAR INVENTÁRIO DE UM PERSONAGEM ESPECÍFICO (Usado no InventoryFragment)
-    @GetMapping("/character/{characterId}")
-    public ResponseEntity<List<Inventory>> listarPorPersonagem(@PathVariable Integer characterId) {
-        return ResponseEntity.ok(inventoryDao.listarPorPersonagem(characterId));
-    }
-
     // BUSCAR UM REGISTRO ESPECÍFICO
     @GetMapping("/{id}")
     public ResponseEntity<Inventory> buscar(@PathVariable Integer id) {

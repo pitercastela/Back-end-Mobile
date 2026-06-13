@@ -80,31 +80,7 @@ public class InventoryDao implements CrudDao<Inventory> {
         }
         return inventories;
     }
-
-    // MÉTODO EXTRA: Buscar apenas os itens de um personagem específico!
-    public List<Inventory> listarPorPersonagem(Integer characterId) {
-        List<Inventory> inventories = new ArrayList<>();
-        String sql = "SELECT * FROM inventory WHERE character_id = ?";
-        Connection conn = Conexao.getInstanciaConexao();
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, characterId);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    inventories.add(Inventory.builder()
-                            .id(rs.getInt("id"))
-                            .characterId(rs.getInt("character_id"))
-                            .itemCatalogId(rs.getInt("item_catalog_id"))
-                            .isEquipped(rs.getBoolean("is_equipped"))
-                            .build());
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar inventário do personagem", e);
-        }
-        return inventories;
-    }
+    
 
     @Override
     public boolean atualizar(Inventory inventory) {
