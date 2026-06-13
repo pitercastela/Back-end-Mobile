@@ -90,4 +90,12 @@ public class InventoryController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    // Rota: GET /api/inventory/character/{characterId}
+    @GetMapping("/character/{characterId}")
+    public ResponseEntity<List<InventoryItemDTO>> buscarPorPersonagem(@PathVariable Integer characterId) {
+        // Agora chamamos o método que traz os dados completos!
+        List<InventoryItemDTO> itens = inventoryDao.buscarInventarioCompleto(characterId);
+        return ResponseEntity.ok(itens);
+    }
 }

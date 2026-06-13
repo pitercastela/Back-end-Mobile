@@ -137,4 +137,33 @@ public class InventoryDao implements CrudDao<Inventory> {
             throw new RuntimeException("Erro ao deletar item do inventário", e);
         }
     }
+
+    public List<InventoryItemDTO> buscarInventarioCompleto(Integer characterId) {
+        List<InventoryItemDTO> itens = new ArrayList<>();
+        // O segredo está no INNER JOIN: Juntamos a mochila com o catálogo
+        String sql = "SELECT i.id AS inventory_id, c.id AS catalog_id, c.name, c.description, c.item_type, i.is_equipped " +
+                "FROM inventory i " +
+                "INNER JOIN items_catalog c ON i.item_catalog_id = c.id " +
+                "WHERE i.character_id = ?";
+
+        Connection conn = Conexao.getInstanciaConexao();
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, characterId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    itens.add(InventoryItemDTO.builder()
+                            .inventoryId(rs.getInt("inventory_id"))
+                            .itemCatalogId(rs.getInt("catalog_id"))
+                            .name(rs.getString("name"))
+                            .description(rs.getString("description"))
+                            .itemType(rs.getString("item_type"))
+                            .isEquipped(rs.getBoolean("is_equipped"))
+                            .build());
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar inventário com JOIN", e);
+        }
+        return itens;
+    }
 }
