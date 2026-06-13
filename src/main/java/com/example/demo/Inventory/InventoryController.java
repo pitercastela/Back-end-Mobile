@@ -92,4 +92,18 @@ public class InventoryController {
         List<InventoryItemDTO> itens = inventoryDao.buscarInventarioCompleto(characterId);
         return ResponseEntity.ok(itens);
     }
+
+    @PutMapping("/{inventoryId}/equip")
+    public ResponseEntity<Void> toggleEquip(
+            @PathVariable Integer inventoryId,
+            @RequestParam Boolean isEquipped) {
+
+        boolean atualizado = inventoryDao.atualizarStatusEquipado(inventoryId, isEquipped);
+
+        if (atualizado) {
+            return ResponseEntity.ok().build(); // Retorna 200 OK sem corpo (Void)
+        } else {
+            return ResponseEntity.notFound().build(); // Retorna 404 se o item não existir
+        }
+    }
 }

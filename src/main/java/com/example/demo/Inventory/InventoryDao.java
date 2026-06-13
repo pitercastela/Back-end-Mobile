@@ -80,7 +80,7 @@ public class InventoryDao implements CrudDao<Inventory> {
         }
         return inventories;
     }
-    
+
 
     @Override
     public boolean atualizar(Inventory inventory) {
@@ -141,5 +141,19 @@ public class InventoryDao implements CrudDao<Inventory> {
             throw new RuntimeException("Erro ao buscar inventário com JOIN", e);
         }
         return itens;
+    }
+
+    public boolean atualizarStatusEquipado(Integer inventoryId, Boolean isEquipped) {
+        String sql = "UPDATE inventory SET is_equipped = ? WHERE id = ?";
+        Connection conn = Conexao.getInstanciaConexao();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setBoolean(1, isEquipped);
+            stmt.setInt(2, inventoryId);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar status do equipamento", e);
+        }
     }
 }
