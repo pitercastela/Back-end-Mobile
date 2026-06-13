@@ -22,11 +22,12 @@ public class PlayerCharacterController {
     @PostMapping
     public ResponseEntity<PlayerCharacter> criar(
             @RequestParam Integer userId,
-            @RequestParam(defaultValue = "Miserável Padrão") String name,
+            @RequestParam(defaultValue = "Jogador Padrão") String name,
             @RequestParam(defaultValue = "Sem Classe") String className,
             @RequestParam(defaultValue = "10") Integer currentHp,
             @RequestParam(defaultValue = "10") Integer maxHp,
-            @RequestParam(defaultValue = "2") Integer omens,
+            @RequestParam(defaultValue = "2") Integer currentOmens,
+            @RequestParam(defaultValue = "2") Integer maxOmens,
             @RequestParam(defaultValue = "0") Integer silver,
             @RequestParam(defaultValue = "0") Integer strength,
             @RequestParam(defaultValue = "0") Integer agility,
@@ -41,7 +42,8 @@ public class PlayerCharacterController {
                 .className(className)
                 .currentHp(currentHp)
                 .maxHp(maxHp)
-                .omens(omens)
+                .currentOmens(currentOmens)
+                .maxOmens(maxOmens)
                 .silver(silver)
                 .strength(strength)
                 .agility(agility)
@@ -75,7 +77,8 @@ public class PlayerCharacterController {
             @RequestParam String className,
             @RequestParam Integer currentHp,
             @RequestParam Integer maxHp,
-            @RequestParam Integer omens,
+            @RequestParam(defaultValue = "2") Integer currentOmens,
+            @RequestParam(defaultValue = "2") Integer maxOmens,
             @RequestParam Integer silver,
             @RequestParam Integer strength,
             @RequestParam Integer agility,
@@ -92,7 +95,8 @@ public class PlayerCharacterController {
                 .className(className)
                 .currentHp(currentHp)
                 .maxHp(maxHp)
-                .omens(omens)
+                .currentOmens(currentOmens)
+                .maxOmens(maxOmens)
                 .silver(silver)
                 .strength(strength)
                 .agility(agility)

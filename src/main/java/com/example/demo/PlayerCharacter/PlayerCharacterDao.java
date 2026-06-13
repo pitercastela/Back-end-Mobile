@@ -11,7 +11,7 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
 
     @Override
     public PlayerCharacter salvar(PlayerCharacter character) {
-        String sql = "INSERT INTO characters (user_id, name, class_name, current_hp, max_hp, omens, silver, strength, agility, presence, toughness, notes, conditions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO characters (user_id, name, class_name, current_hp, max_hp, current_omens, max_omens, silver, strength, agility, presence, toughness, notes, conditions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Connection conn = Conexao.getInstanciaConexao();
 
         // O Statement.RETURN_GENERATED_KEYS nos permite pegar o ID gerado automaticamente (AUTO_INCREMENT)
@@ -21,14 +21,15 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
             stmt.setString(3, character.getClassName());
             stmt.setInt(4, character.getCurrentHp());
             stmt.setInt(5, character.getMaxHp());
-            stmt.setInt(6, character.getOmens());
-            stmt.setInt(7, character.getSilver());
-            stmt.setInt(8, character.getStrength());
-            stmt.setInt(9, character.getAgility());
-            stmt.setInt(10, character.getPresence());
-            stmt.setInt(11, character.getToughness());
-            stmt.setString(12, character.getNotes());
-            stmt.setString(13, character.getConditions());
+            stmt.setInt(6, character.getCurrentOmens());
+            stmt.setInt(7, character.getMaxOmens());
+            stmt.setInt(8, character.getSilver());
+            stmt.setInt(9, character.getStrength());
+            stmt.setInt(10, character.getAgility());
+            stmt.setInt(11, character.getPresence());
+            stmt.setInt(12, character.getToughness());
+            stmt.setString(13, character.getNotes());
+            stmt.setString(14, character.getConditions());
 
             stmt.executeUpdate();
 
@@ -63,7 +64,8 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
                             .className(rs.getString("class_name"))
                             .currentHp(rs.getInt("current_hp"))
                             .maxHp(rs.getInt("max_hp"))
-                            .omens(rs.getInt("omens"))
+                            .currentOmens(rs.getInt("current_omens"))
+                            .maxOmens(rs.getInt("max_omens"))
                             .silver(rs.getInt("silver"))
                             .strength(rs.getInt("strength"))
                             .agility(rs.getInt("agility"))
@@ -98,7 +100,8 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
                         .className(rs.getString("class_name"))
                         .currentHp(rs.getInt("current_hp"))
                         .maxHp(rs.getInt("max_hp"))
-                        .omens(rs.getInt("omens"))
+                        .currentOmens(rs.getInt("current_omens"))
+                        .maxOmens(rs.getInt("max_omens"))
                         .silver(rs.getInt("silver"))
                         .strength(rs.getInt("strength"))
                         .agility(rs.getInt("agility"))
@@ -117,7 +120,7 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
 
     @Override
     public boolean atualizar(PlayerCharacter character) {
-        String sql = "UPDATE characters SET name = ?, class_name = ?, current_hp = ?, max_hp = ?, omens = ?, silver = ?, strength = ?, agility = ?, presence = ?, toughness = ?, notes = ?, conditions = ? WHERE id = ?";
+        String sql = "UPDATE characters SET name = ?, class_name = ?, current_hp = ?, max_hp = ?, current_omens = ?, max_omens = ?, silver = ?, strength = ?, agility = ?, presence = ?, toughness = ?, notes = ?, conditions = ? WHERE id = ?";
         Connection conn = Conexao.getInstanciaConexao();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -125,16 +128,17 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
             stmt.setString(2, character.getClassName());
             stmt.setInt(3, character.getCurrentHp());
             stmt.setInt(4, character.getMaxHp());
-            stmt.setInt(5, character.getOmens());
-            stmt.setInt(6, character.getSilver());
-            stmt.setInt(7, character.getStrength());
-            stmt.setInt(8, character.getAgility());
-            stmt.setInt(9, character.getPresence());
-            stmt.setInt(10, character.getToughness());
-            stmt.setString(11, character.getNotes());
-            stmt.setString(12, character.getConditions());
+            stmt.setInt(5, character.getCurrentOmens());
+            stmt.setInt(6, character.getMaxOmens());
+            stmt.setInt(7, character.getSilver());
+            stmt.setInt(8, character.getStrength());
+            stmt.setInt(9, character.getAgility());
+            stmt.setInt(10, character.getPresence());
+            stmt.setInt(11, character.getToughness());
+            stmt.setString(12, character.getNotes());
+            stmt.setString(13, character.getConditions());
 
-            stmt.setInt(13, character.getId());
+            stmt.setInt(14, character.getId());
 
             return stmt.executeUpdate() > 0;
 
@@ -174,7 +178,8 @@ public class PlayerCharacterDao implements CrudDao<PlayerCharacter> {
                             .className(rs.getString("class_name"))
                             .currentHp(rs.getInt("current_hp"))
                             .maxHp(rs.getInt("max_hp"))
-                            .omens(rs.getInt("omens"))
+                            .currentOmens(rs.getInt("current_omens"))
+                            .maxOmens(rs.getInt("max_omens"))
                             .silver(rs.getInt("silver"))
                             .strength(rs.getInt("strength"))
                             .agility(rs.getInt("agility"))

@@ -19,7 +19,8 @@ public class PlayerCharacter {
     private String className;
     private Integer currentHp;
     private Integer maxHp;
-    private Integer omens;
+    private Integer currentOmens = 2;
+    private Integer maxOmens = 2;
     private Integer silver;
 
     private Integer strength;
